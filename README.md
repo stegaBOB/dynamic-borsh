@@ -1,78 +1,3 @@
-<div align="center">
-
-  <h1><code>borsh</code></h1>
-
-  <p>
-    <strong>Binary Object Representation Serializer for Hashing</strong>
-  </p>
-  
-  <h3>
-    <a href="https://borsh.io">Website</a>
-    <span> | </span>
-    <a href="https://near.chat">Join Community</a>
-    <span> | </span>
-    <a href="https://github.com/nearprotocol/borsh#implementations">Implementations</a>
-    <span> | </span>
-    <a href="https://github.com/nearprotocol/borsh#benchmarks">Benchmarks</a>
-    <span> | </span>
-    <a href="https://github.com/nearprotocol/borsh#specification">Specification</a>
-  </h3>
-</div>
-
-Why do we need yet another serialization format? Borsh is the first serializer that prioritizes the following qualities that are crucial for security-critical projects:
-
-- Consistent and specified binary representation:
-  - Consistent means there is a bijective mapping between objects and their binary representations. There is no two binary representations that deserialize
-    into the same object. This is extremely useful for applications that use binary representation to compute hash;
-  - Borsh comes with a full specification that can be used for implementations in other languages;
-- Safe. Borsh implementations use safe coding practices. In Rust, Borsh uses almost only safe code, with one exception usage of `unsafe` to avoid an exhaustion attack;
-- Speed. In Rust, Borsh achieves high performance by opting out from [Serde](https://serde.rs) which makes it faster
-  than [bincode](https://github.com/servo/bincode) in some cases; which also reduces the code size.
-
-## Implementations
-
-| Platform                          | Repository                                                       | Latest Release                                                                                                                                                                 |
-|-----------------------------------|------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Rust                              | [borsh-rs](https://github.com/near/borsh-rs)                     | <a href="https://crates.io/crates/borsh"><img src="https://img.shields.io/crates/v/borsh.svg?style=flat-square" alt="Latest released version" /></a>                           |
-| TypeScript                        | [zorsh](https://github.com/r-near/zorsh)                         | <a href="https://npmjs.com/package/@zorsh/zorsh"><img src="https://img.shields.io/npm/v/@zorsh/zorsh.svg?style=flat-square" alt="Latest released version"></a>                 |
-| TypeScript, JavaScript            | [borsh-js](https://github.com/near/borsh-js)                     | <a href="https://npmjs.com/borsh"><img src="https://img.shields.io/npm/v/borsh.svg?style=flat-square" alt="Latest released version"></a>                                       |
-| TypeScript                        | [borsh-ts](https://github.com/dao-xyz/borsh-ts)                  | <a href="https://npmjs.com/package/@dao-xyz/borsh"><img src="https://img.shields.io/npm/v/@dao-xyz/borsh.svg?style=flat-square" alt="Latest released version"></a>             |
-| Java, Kotlin, Scala, Clojure, etc | [borshj](https://github.com/near/borshj)                         |                                                                                                                                                                                |
-| Go                                | [borsh-go](https://github.com/near/borsh-go)                     | <a href="https://github.com/near/borsh-go"><img src="https://img.shields.io/github/v/release/near/borsh-go?sort=semver&style=flat-square" alt="Latest released version" /></a> |
-| Python                            | [borsh-construct-py](https://github.com/near/borsh-construct-py) | <a href="https://pypi.org/project/borsh-construct/"><img src="https://img.shields.io/pypi/v/borsh-construct.svg?style=flat-square" alt="Latest released version" /></a>        |
-| Assemblyscript                    | [borsh-as](https://github.com/gagdiez/serial-as/tree/main/borsh) | <a href="https://www.npmjs.com/package/@serial-as/borsh"><img src="https://img.shields.io/npm/v/@serial-as/borsh?style=flat-square" alt="Latest released version" /></a>       |
-| C#                                | [Hexarc.Borsh](https://github.com/hexarc-software/hexarc-borsh)  | <a href="https://www.nuget.org/packages/Hexarc.Borsh"><img src="https://img.shields.io/nuget/v/Hexarc.Borsh.svg?style=flat-square" alt="Latest released version" /></a>        |
-| C++                               | [borsh-cpp](https://github.com/Stolkerve/borsh-cpp)              | *(work-in-progress)*                                                                                                                                                           |
-| C++20                             | [borsh-cpp20](https://github.com/israelidanny/borsh-cpp20)       | *(work-in-progress)*                                                                                                                                                           |
-| Elixir                            | [borsh-ex](https://github.com/alexfilatov/borsh)                 | <a href="https://hex.pm/packages/borsh"><img src="https://img.shields.io/hexpm/v/borsh.svg?style=flat-square" alt="Latest released version" /></a>                             |
-| Ruby                              | [borsh.rb](https://github.com/dryruby/borsh.rb)                  | <a href="https://rubygems.org/gems/borsh"><img src="https://img.shields.io/gem/v/borsh?style=flat-square" alt="Latest released version" /></a>                                 |
-
-## Benchmarks
-
-We measured the following benchmarks on objects that blockchain projects care about the most: blocks, block headers,
-transactions, accounts. We took object structure from the [NEAR Protocol](https://near.org) blockchain.
-We used [Criterion](https://bheisler.github.io/criterion.rs/book/index.html) for building the following graphs.
-
-The benchmarks were run on Google Cloud [n1-standard-2 (2 vCPUs, 7.5 GB memory)](https://cloud.google.com/compute/docs/machine-types).
-
-Block header serialization speed vs block header size in bytes (size only roughly corresponds to the serialization complexity which causes non-smoothness of the graph):
-
-![ser_header](http://borsh.io/criterion/ser_header/report/lines.svg)
-
-Block header de-serialization speed vs block header size in bytes:
-
-![ser_header](http://borsh.io/criterion/de_header/report/lines.svg)
-
-Block serialization speed vs block size in bytes:
-
-![ser_header](http://borsh.io/criterion/ser_block/report/lines.svg)
-
-Block de-serialization speed vs block size in bytes:
-
-![ser_header](http://borsh.io/criterion/de_block/report/lines.svg)
-
-See complete report [here](http://borsh.io/criterion/report/index.html).
-
 ## Specification
 
 In short, Borsh is a non self-describing binary serialization format. It is designed to serialize any objects to canonical and deterministic set of bytes.
@@ -80,10 +5,10 @@ In short, Borsh is a non self-describing binary serialization format. It is desi
 General principles:
 
 - integers are little endian;
-- sizes of dynamic containers are written before values as `u32`;
+- sizes of dynamic containers are written before values as ~~`u32`~~ `Some integer type`;
 - all unordered containers (hashmap/hashset) are ordered in lexicographic order by key (in tie breaker case on value);
 - structs are serialized in the order of fields in the struct;
-- enums are serialized with using `u8` for the enum ordinal and then storing data inside the enum value (if present).
+- enums are serialized with using ~~`u8`~~ `Some integer type` for the enum ordinal and then storing data inside the enum value (if present).
 
 Formal specification:
 
@@ -136,7 +61,7 @@ Formal specification:
       <td>Dynamic sized array</td>
       <td>vec_type: "Vec&lt;" ident '&gt;'</td>
       <td>
-        repr(len() as u32)<br/>
+        repr(len() as <s>u32</s> some integer type)<br/>
         for el in x {<br/>
         &nbsp; repr(el as ident)<br/>
         }
@@ -178,7 +103,7 @@ Formal specification:
       </td>
       <td>
         Suppose X is the number of the variant that the enum takes.<br/>
-        repr(X as u8)<br/>
+        repr(X as <s>u8</s> some integer type)<br/>
         repr(x.X as fieldsX)
       </td>
     </tr>
@@ -186,7 +111,7 @@ Formal specification:
       <td>HashMap</td>
       <td>hashmap: "HashMap&lt;" ident0, ident1 "&gt;"</td>
       <td>
-        repr(x.len() as u32)<br/>
+        repr(x.len() as <s>u32</s> some integer type)<br/>
         for (k, v) in x.sorted_by_key() {<br/>
         &nbsp; repr(k as ident0)<br/>
         &nbsp; repr(v as ident1)<br/>
@@ -197,7 +122,7 @@ Formal specification:
       <td>HashSet</td>
       <td>hashset: "HashSet&lt;" ident "&gt;"</td>
       <td>
-        repr(x.len() as u32)<br/>
+        repr(x.len() as <s>u32</s> some integer type)<br/>
         for el in x.sorted() {<br/>
         &nbsp; repr(el as ident)<br/>
         }
@@ -220,7 +145,7 @@ Formal specification:
       <td>string_type: "String"</td>
       <td>
         encoded = utf8_encoding(x) as Vec&lt;u8&gt;<br/>
-        repr(encoded.len() as u32)<br/>
+        repr(encoded.len() as <s>u32</s> some integer type)<br/>
         repr(encoded as Vec&lt;u8&gt;)
       </td>
     </tr>
